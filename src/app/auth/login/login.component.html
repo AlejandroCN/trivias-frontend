@@ -1,43 +1,83 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
-      <form class="login100-form validate-form">
+      <form [formGroup]="form" class="login100-form validate-form">
         <span class="login100-form-title pb-3"> Trivias App </span>
         <span class="login100-form-title pb-4">
           <fa-icon [icon]="faLightbulb"></fa-icon>
         </span>
 
+        <!-- Username -->
         <div
           class="wrap-input100 validate-input"
-          data-validate="Valid email is: a@b.c"
+          [ngClass]="
+            form.get('username').invalid &&
+            (form.get('username').dirty ||
+            form.get('username').touched)
+              ? 'alert-validate'
+              : ''
+          "
+          [attr.data-validate]="
+            form.get('username').hasError('required')
+              ? 'Indique su username'
+              : ''
+          "
         >
-          <input class="input100" type="text" name="email" />
-          <span class="focus-input100" data-placeholder="Correo Electrónico"></span>
+          <input formControlName="username" class="input100" type="text" />
+          <span
+            class="focus-input100"
+            data-placeholder="Nombre de usuario"
+          ></span>
         </div>
+        <!-- /Username -->
 
+        <!-- Password -->
         <div
           class="wrap-input100 validate-input"
-          data-validate="Enter password"
+          [ngClass]="
+            form.get('password').invalid &&
+            (form.get('password').dirty ||
+            form.get('password').touched)
+              ? 'alert-validate'
+              : ''
+          "
+          [attr.data-validate]="
+            form.get('password').hasError('required')
+              ? 'Indique su contraseña'
+              : ''
+          "
         >
-          <span class="btn-show-pass" (click)="mostrarPassword = !mostrarPassword">
+          <span
+            class="btn-show-pass"
+            (click)="mostrarPassword = !mostrarPassword"
+          >
             <fa-icon [icon]="mostrarPassword ? faEyeSlash : faEye"></fa-icon>
           </span>
-          <input class="input100" [type]="mostrarPassword ? 'text' : 'password'" name="pass" />
+          <input
+            formControlName="password"
+            class="input100"
+            [type]="mostrarPassword ? 'text' : 'password'"
+          />
           <span class="focus-input100" data-placeholder="Contraseña"></span>
         </div>
+        <!-- /Password -->
 
+        <!-- Submit -->
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button class="login100-form-btn">Entrar</button>
+            <button class="login100-form-btn" (click)="iniciarSesion()">Entrar</button>
           </div>
         </div>
+        <!-- /Submit -->
 
+        <!-- Register -->
         <div class="text-center p-t-115">
           <span class="txt1"> ¿No tienes cuenta? </span>
 
-          <a class="txt2" href="#"> Registrarse </a>
+          <a class="txt2" href="#"routerLink="/auth/register"> Registrarse </a>
         </div>
+        <!-- /Register -->
       </form>
     </div>
   </div>

@@ -1,0 +1,122 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <form [formGroup]="form" class="login100-form validate-form">
+        <span class="login100-form-title pb-3"> Regístrate </span>
+        <span class="login100-form-title pb-4">
+          <fa-icon [icon]="faLightbulb"></fa-icon>
+        </span>
+
+        <!-- Nombre -->
+        <div
+          class="wrap-input100 validate-input"
+          [ngClass]="
+            form.get('nombre').invalid &&
+            (form.get('nombre').dirty || form.get('nombre').touched)
+              ? 'alert-validate'
+              : ''
+          "
+          [attr.data-validate]="
+            form.get('nombre').hasError('required')
+              ? 'Indique su nombre'
+              : form.get('nombre').hasError('minlength')
+              ? 'Al menos 3 letras'
+              : form.get('nombre').hasError('maxlength')
+              ? 'Máximo 100 letras'
+              : form.get('nombre').hasError('pattern')
+              ? 'Use solo letras'
+              : ''
+          "
+        >
+          <input formControlName="nombre" class="input100" type="text" />
+          <span class="focus-input100" data-placeholder="Nombre(s)"></span>
+        </div>
+        <!-- /Nombre -->
+
+        <!-- Username -->
+        <div
+          class="wrap-input100 validate-input"
+          [ngClass]="
+            form.get('username').invalid &&
+            (form.get('username').dirty || form.get('username').touched)
+              ? 'alert-validate'
+              : ''
+          "
+          [attr.data-validate]="
+            form.get('username').hasError('required')
+              ? 'Indique su username'
+              : form.get('username').hasError('pattern')
+              ? 'Username no válido'
+              : form.get('username').hasError('minlength')
+              ? 'Al menos 3 caracteres'
+              : form.get('username').hasError('maxlength')
+              ? 'Máximo 25 caracteres'
+              : ''
+          "
+        >
+          <input formControlName="username" class="input100" type="text" />
+          <span
+            class="focus-input100"
+            data-placeholder="Nombre de usuario"
+          ></span>
+        </div>
+        <!-- /Username -->
+
+        <!-- Password -->
+        <div
+          class="wrap-input100 validate-input"
+          [ngClass]="
+            form.get('password').invalid &&
+            (form.get('password').dirty || form.get('password').touched)
+              ? 'alert-validate'
+              : ''
+          "
+          [attr.data-validate]="
+            form.get('password').hasError('required')
+              ? 'Indique su contraseña'
+              : form.get('password').hasError('minlength')
+              ? 'Al menos 6 caracteres'
+              : form.get('password').hasError('maxlength')
+              ? 'Máximo 10 caracteres'
+              : form.get('password').hasError('pattern')
+              ? 'Solo letras y números'
+              : ''
+          "
+        >
+          <span
+            class="btn-show-pass"
+            (click)="mostrarPassword = !mostrarPassword"
+          >
+            <fa-icon [icon]="mostrarPassword ? faEyeSlash : faEye"></fa-icon>
+          </span>
+          <input
+            formControlName="password"
+            class="input100"
+            [type]="mostrarPassword ? 'text' : 'password'"
+          />
+          <span class="focus-input100" data-placeholder="Contraseña"></span>
+        </div>
+        <!-- /Password -->
+
+        <!-- Submit -->
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn" (click)="registrar()">
+              Registrarse
+            </button>
+          </div>
+        </div>
+        <!-- /Submit -->
+
+        <!-- Login -->
+        <div class="text-center p-t-115">
+          <span class="txt1"> ¿Ya tienes cuenta? </span>
+
+          <a class="txt2" routerLink="/auth/login"> Iniciar Sesión </a>
+        </div>
+        <!-- /Login -->
+      </form>
+    </div>
+  </div>
+</div>

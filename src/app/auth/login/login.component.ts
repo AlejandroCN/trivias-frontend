@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   iniciarSesion(): void {
+    this.form.markAllAsTouched();
   }
 
 }
