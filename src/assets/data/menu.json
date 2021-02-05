@@ -1,0 +1,38 @@
+[
+  {
+    "header": "CATÁLOGOS",
+    "roles": ["ROLE_ADMIN"],
+    "menuItems": [
+      {
+        "title": "Categorías",
+        "icon": "object-group",
+        "link": "/catalogos/categorias",
+        "roles": ["ROLE_ADMIN"]
+      },
+      {
+        "title": "Preguntas",
+        "icon": "question",
+        "link": "/catalogos/preguntas",
+        "roles": ["ROLE_ADMIN"]
+      }
+    ]
+  },
+  {
+    "header": "RECORDS",
+    "roles": ["ROLE_ADMIN", "ROLE_JUGADOR"],
+    "menuItems": [
+      {
+        "title": "Mis Records",
+        "icon": "gamepad",
+        "link": "/records/mis-records",
+        "roles": ["ROLE_JUGADOR"]
+      },
+      {
+        "title": "Top Ten",
+        "icon": "chart-bar",
+        "link": "/records/top-ten",
+        "roles": ["ROLE_ADMIN", "ROLE_JUGADOR"]
+      }
+    ]
+  }
+]

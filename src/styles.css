@@ -16,3 +16,8 @@ html {
 body {
   margin: 0;
 }
+
+.puntero {
+  cursor: pointer;
+  text-decoration: none !important;
+}

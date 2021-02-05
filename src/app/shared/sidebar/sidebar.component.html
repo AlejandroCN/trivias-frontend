@@ -14,43 +14,26 @@
       />
     </div>
     <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong>Mike</strong></span
+      <span
+        ><strong>{{ usuario.username }}</strong></span
       ><br />
-      <span>Administrador</span>
+      <span>{{ usuario.rol.nombreVisible }}</span>
     </div>
   </div>
   <hr />
-  <div class="w3-container">
-    <h5>Dashboard</h5>
-  </div>
-  <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"
-      ><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-eye fa-fw"></i>&nbsp; Views</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-users fa-fw"></i>&nbsp; Traffic</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-bullseye fa-fw"></i>&nbsp; Geo</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-diamond fa-fw"></i>&nbsp; Orders</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-bell fa-fw"></i>&nbsp; News</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-bank fa-fw"></i>&nbsp; General</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-history fa-fw"></i>&nbsp; History</a
-    >
-    <a href="#" class="w3-bar-item w3-button w3-padding"
-      ><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a
-    ><br /><br />
+  <div *ngFor="let menu of menus">
+    <div class="w3-container" *ngIf="menu.header && permisoConcedido(menu)">
+      <h5>{{ menu.header }}</h5>
+    </div>
+    <div *ngFor="let menuItem of menu.menuItems" class="w3-bar-block">
+      <a
+      *ngIf="permisoConcedido(menuItem)"
+        [routerLink]="[menuItem.link]"
+        routerLinkActive="w3-blue"
+        class="w3-bar-item w3-button w3-padding"
+        ><fa-icon [icon]="menuItem.icon"></fa-icon>&nbsp; {{ menuItem.title }}</a
+      >
+    </div>
   </div>
 </nav>
 
