@@ -10,8 +10,6 @@ import { environment } from 'src/environments/environment';
 import { Rol } from '../models/rol.model';
 import { Usuario } from '../models/usuario.model';
 
-declare const gapi: any;
-
 @Injectable({
   providedIn: 'root'
 })

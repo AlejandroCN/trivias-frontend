@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RoleGuard } from '../guards/role.guard';
 
-const rutas: Routes = [];
+const rutas: Routes = [
+  {
+    path: 'catalogos',
+    loadChildren: () => import('./catalogos/catalogos.module').then(m => m.CatalogosModule),
+    canActivate: [RoleGuard],
+    data: {
+      roles: ['ROLE_ADMIN']
+    }
+  }
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(rutas) ],
