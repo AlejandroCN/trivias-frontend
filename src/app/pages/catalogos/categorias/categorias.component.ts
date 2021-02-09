@@ -54,7 +54,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   clickBotonAgregar(): void {
-    this.router.navigate(['/catalogos/categorias/form-categoria']);
+    this.router.navigate(['/catalogos/form-categoria']);
   }
 
   obtenerPagina(): void {
@@ -63,9 +63,8 @@ export class CategoriasComponent implements OnInit {
       this.mensajeErrorHttp = '';
       this.categorias = resp.content;
       this.pagina.totalElementos = resp.totalElements;
-      this.cargando = false;
 
-      console.log(this.categorias);
+      this.cargando = false;
     }, err => {
       if (err.status === 401 || err.status === 403) {
         this.authService.errorDeAutenticacion();

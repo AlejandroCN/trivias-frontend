@@ -1,7 +1,100 @@
 <div class="card">
   <div class="card-header">Listado De Categorías</div>
 
-  <div class="card-body">
-	
+  <!-- Spinner -->
+  <div class="spinner-container text-primary" *ngIf="cargando">
+    <fa-icon icon="spinner" [spin]="true" size="5x"></fa-icon>
+  </div>
+  <!-- /Spinner -->
+  
+  <div class="card-body" [hidden]="cargando">
+    <!-- Contenedor tabla encabezado -->
+    <div class="table-responsive">
+      <app-header-table
+        [displayBotonAdd]="true"
+        [labelBotonAdd]="'Agregar Nuevo'"
+        [itemsPorPagina]="itemsPorPagina"
+        (cambioTamPag)="cambioPagina($event)"
+        (cambioTermino)="cambioTermino($event)"
+        (clickAdd)="clickBotonAgregar()"
+      ></app-header-table>
+    </div>
+    <!-- /Contenedor tabla encabezado -->
+
+    <!-- Contenedor Tabla Categorias -->
+    <div class="table-responsive">
+      <!-- Tabla Categorias -->
+      <table class="table table-bordered table-sm text-center">
+        <!-- Encabezado -->
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th class="th-hoverable" (click)="ordenar('categoria')">Categoría</th>
+            <th class="th-hoverable" (click)="ordenar('descripcion')">Descripción</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+
+        <!-- Cuerpo Tabla -->
+        <tbody>
+          <!-- Categorías Existentes -->
+          <tr *ngFor="let categoria of categorias">
+            <td>Img</td>
+            <td>{{ categoria.categoria }}</td>
+            <td>{{ categoria.descripcion }}</td>
+            
+            <!-- editar -->
+            <td>
+              <button
+                class="btn btn-outline-primary"
+                [routerLink]="['/catalogos/categorias/form-categoria', categoria.id]"
+              >
+                <fa-icon icon="edit"></fa-icon>
+              </button>
+            </td>
+            <!-- /editar -->
+
+            <!-- eliminar -->
+            <td>
+              <button
+                class="btn drp-icon btn-icon btn-outline-danger"
+                (click)="eliminar(categoria)"
+              >
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </td>
+            <!-- /eliminar -->
+          </tr>
+          <!-- /Categorías Existentes -->
+
+          <!-- Si no hay registros se genera un solo renglon con un mensaje de error -->
+          <tr *ngIf="mensajeErrorHttp.length > 0">
+            <td colspan="11">
+              <div class="alert alert-primary" role="alert">
+                <strong>{{ mensajeErrorHttp }}</strong>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- /Cuerpo Tabla -->
+      </table>
+      <!-- /Tabla Categorias -->
+    </div>
+    <!-- /Contenedor Tabla Categorias -->
+
+    <!-- Paginador -->
+    <ngb-pagination
+      class="d-flex justify-content-end"
+      [pageSize]="pagina.tamPagina"
+      [collectionSize]="pagina.totalElementos"
+      [(page)]="pagina.numPagina"
+      [maxSize]="itemsPorPagina[itemsPorPagina.length - 1]"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      (pageChange)="obtenerPagina()"
+    ></ngb-pagination>
+    <!-- /Paginador -->
   </div>
 </div>

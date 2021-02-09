@@ -1,0 +1,109 @@
+<!-- Spinner -->
+<div class="spinner-container text-primary" *ngIf="cargando">
+  <fa-icon icon="spinner" [spin]="true" size="5x"></fa-icon>
+</div>
+<!-- /Spinner -->
+
+<section [hidden]="cargando">
+  <!-- Datos Categoria -->
+  <div class="card">
+    <div class="card-header">Ingrese Los Datos Solicitados</div>
+
+    <div class="card-body">
+      <form [formGroup]="form">
+        <!-- Primer Renglon -->
+        <div class="row">
+          <!-- Nombre Categoria -->
+          <div class="form-group col-sm-6">
+            <label>Nombre Categoría</label>
+            <input
+              type="text"
+              class="form-control"
+              autocomplete="off"
+              formControlName="categoria"
+            />
+            <!-- Errores -->
+            <div
+              class="text-danger errors"
+              *ngIf="
+                form.get('categoria').invalid &&
+                (form.get('categoria').touched || form.get('categoria').dirty)
+              "
+            >
+              <small *ngIf="form.get('categoria').hasError('required')">
+                Debe indicar el nombre de la categoría
+              </small>
+              <small *ngIf="form.get('categoria').hasError('minlength')">
+                Ingrese al menos 3 caracteres
+              </small>
+              <small *ngIf="form.get('categoria').hasError('maxlength')">
+                Ingrese máximo 50 caracteres
+              </small>
+              <small *ngIf="form.get('categoria').hasError('pattern')">
+                Use solo caracteres alfanuméricos
+              </small>
+            </div>
+            <!-- Errores -->
+          </div>
+          <!-- Nombre Categoria -->
+
+          <!-- Descripcion -->
+          <div class="form-group col-sm-6">
+            <label>Descripción Categoría</label>
+            <textarea
+              class="form-control"
+              autocomplete="off"
+              formControlName="descripcion"
+            >
+            </textarea>
+            <!-- Errores -->
+            <div
+              class="text-danger errors"
+              *ngIf="
+                form.get('descripcion').invalid &&
+                (form.get('descripcion').touched ||
+                  form.get('descripcion').dirty)
+              "
+            >
+              <small *ngIf="form.get('descripcion').hasError('required')">
+                Debe indicar la descripción
+              </small>
+              <small *ngIf="form.get('descripcion').hasError('minlength')">
+                Ingrese al menos 5 caracteres
+              </small>
+              <small *ngIf="form.get('descripcion').hasError('maxlength')">
+                Ingrese máximo 150 caracteres
+              </small>
+              <small *ngIf="form.get('descripcion').hasError('pattern')">
+                Use solo caracteres alfanuméricos
+              </small>
+            </div>
+            <!-- /Errores -->
+          </div>
+          <!-- /Descripcion -->
+        </div>
+        <!-- /Primer Renglon -->
+      </form>
+    </div>
+  </div>
+  <!-- /Datos Categoria -->
+
+  <!-- Imagen Categoria -->
+  <div class="card mt-3 mb-3">
+    <div class="card-header">Cargar Imagen</div>
+  </div>
+  <!-- /Imagen Categoria -->
+
+  <!-- Opciones Formulario -->
+  <button class="btn btn-danger mr-2" [disabled]="guardando">Regresar</button>
+  <button class="btn btn-success" [disabled]="guardando" (click)="guardarCategoria()">
+    <fa-icon
+      [icon]="guardando ? 'sync' : 'save'"
+      [spin]="guardando"
+      class="mr-2"
+    ></fa-icon>
+    <span *ngIf="categoria.id === 0">Guardar</span>
+    <span *ngIf="categoria.id > 0">Actualizar</span>
+  </button>
+  <!-- -Opciones Formulario -->
+</section>

@@ -1,0 +1,41 @@
+<!-- Tabla que encabeza la tabla de contenido -->
+<table class="table table-sm text-center table-borderless">
+  <thead>
+    <tr>
+      <!-- Tamanio de la pagina -->
+      <td style="width: 20%; min-width: 20%;">
+        <select class="form-control" [formControl]="selectTam">
+          <option value="" disabled selected>Mostrar</option>
+          <option *ngFor="let i of itemsPorPagina" [value]="i">{{
+            i
+          }}</option>
+        </select>
+      </td>
+      <!-- FIN Tamanio de la pagina -->
+
+      <!-- Buscador -->
+      <td style="width: 40%; min-width: 40%;">
+        <input
+          type="text"
+          class="form-control width-95 mb-1"
+          style="display: inline;"
+          placeholder="buscar"
+          autocomplete="off"
+          [formControl]="controlTermino"
+        />
+      </td>
+
+      <!-- Boton para agregar nuevo usuario -->
+      <td style="width: 5%;" *ngIf="displayBotonAdd">
+        <button
+          [title]="labelBotonAdd"
+          class="btn btn-primary drp-icon btn-icon"
+          (click)="emitirCambioAdd()"
+        >
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+      </td>
+    </tr>
+  </thead>
+</table>
+<!-- FIN Tabla que encabeza la tabla de contenido -->

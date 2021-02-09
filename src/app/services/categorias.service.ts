@@ -37,6 +37,18 @@ export class CategoriasService {
     );
   }
 
+  findById(id: number): Observable<Categoria> {
+    return this.http.get(`${this.endPoint}/findById/${id}`).pipe(
+      map(response => response as Categoria)
+    );
+  }
+
+  update(categoria: Categoria): Observable<Categoria> {
+    return this.http.put(this.endPoint, categoria).pipe(
+      map(response => response as Categoria)
+    );
+  }
+
   delete(categoriaId: number): Observable<Categoria> {
     return this.http.delete(`${this.endPoint}/${categoriaId}`).pipe(
       map(response => response as Categoria)

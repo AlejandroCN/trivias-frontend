@@ -10,6 +10,11 @@ const rutas: Routes = [
     data: {
       roles: ['ROLE_ADMIN']
     }
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/catalogos'
   }
 ];
 
