@@ -5,9 +5,11 @@ import Swal from 'sweetalert2';
 
 import { CategoriasService } from '../../../services/categorias.service';
 import { AuthService } from '../../../services/auth.service';
+import { ValidationService } from '../../../services/validation.service';
+import { UploadFirebaseService } from '../../../services/upload-firebase.service';
 
 import { Categoria } from '../../../models/categoria.model';
-import { ValidationService } from '../../../services/validation.service';
+import { FileItem } from '../../../models/file-item.model';
 
 @Component({
   selector: 'app-form-categoria',
@@ -22,9 +24,12 @@ export class FormCategoriaComponent implements OnInit {
   public categoria: Categoria;
   public form: FormGroup;
 
+  public imagenSeleccionada: FileItem;
+
   constructor(private categoriasService: CategoriasService,
               private authService: AuthService,
               private validation: ValidationService,
+              private uploadFirebaseService: UploadFirebaseService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
     this.configurarForm();
@@ -78,15 +83,18 @@ export class FormCategoriaComponent implements OnInit {
   poblarFormulario(): void {
     this.form.get('categoria').setValue(this.categoria.categoria);
     this.form.get('descripcion').setValue(this.categoria.descripcion);
-
-    // colocar la previsualizacion de la imagen existente (si existe)
   }
 
-  guardarCategoria(): void {
+  async guardarCategoria(): Promise<void> {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.guardando = true;
+      if (this.imagenSeleccionada) {
+        const urlImagenCargada = await this.cargarImagen();
+        this.categoria.imagen = urlImagenCargada;
+      }
 
+      this.construirCategoria();
       if (this.categoria.id === 0) {
         this.crear();
       } else {
@@ -95,8 +103,15 @@ export class FormCategoriaComponent implements OnInit {
     }
   }
 
+  async cargarImagen(): Promise<any> {
+    await this.uploadFirebaseService.subirArchivo(this.imagenSeleccionada);
+
+    return this.uploadFirebaseService.referenciaCloudStorage(this.imagenSeleccionada.nombreArchivo)
+    .getDownloadURL().toPromise();
+  }
+
   crear(): void {
-    this.categoriasService.save(this.construirCategoria()).subscribe(categoria => {
+    this.categoriasService.save(this.categoria).subscribe(categoria => {
       Swal.fire('Categoría Registrada', `Se ha registrado la categoría ${categoria.categoria}`, 'success');
       this.guardando = false;
       this.router.navigateByUrl('/catalogos/categorias');
@@ -113,7 +128,7 @@ export class FormCategoriaComponent implements OnInit {
   }
 
   actualizar(): void {
-    this.categoriasService.update(this.construirCategoria()).subscribe(categoria => {
+    this.categoriasService.update(this.categoria).subscribe(categoria => {
       Swal.fire('Categoría Actualizada', `Se ha actualizado la categoría ${categoria.categoria}`, 'success');
       this.guardando = false;
       this.router.navigateByUrl('/catalogos/categorias');
@@ -129,13 +144,9 @@ export class FormCategoriaComponent implements OnInit {
     });
   }
 
-  construirCategoria(): Categoria {
-    const categoria: Categoria = new Categoria();
-    categoria.categoria = this.form.get('categoria').value.trim().replace(/\s\s+/g, ' ');
-    categoria.descripcion = this.form.get('descripcion').value.trim().replace(/\s\s+/g, ' ');
-
-    // obtener la url de la imagen previamente cargada a firebase
-    return categoria;
+  construirCategoria(): void {
+    this.categoria.categoria = this.form.get('categoria').value.trim().replace(/\s\s+/g, ' ');
+    this.categoria.descripcion = this.form.get('descripcion').value.trim().replace(/\s\s+/g, ' ');
   }
 
 }

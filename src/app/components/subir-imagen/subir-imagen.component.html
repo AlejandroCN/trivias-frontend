@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">Cargar Imagen</div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-12 form-group">
+        <img
+          *ngIf="!imagenSeleccionada"
+          class="img-fluid mx-auto d-block"
+          [src]="ulrImagen | image"
+          style="width: 200px"
+        />
+        <img
+          *ngIf="imagenSeleccionada"
+          class="img-fluid mx-auto d-block"
+          [src]="imagenPreVisualizada"
+          style="width: 200px"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 form-group">
+        <label for="file-upload" class="custom-file-upload">
+          <fa-icon icon="upload" class="mr-2"></fa-icon> Cargar Imagen
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          (change)="seleccionarArchivo($event.target.files[0])"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,7 +26,7 @@
       <!-- Tabla Categorias -->
       <table class="table table-bordered table-sm text-center">
         <!-- Encabezado -->
-        <thead>
+        <thead class="header-datatable">
           <tr>
             <th>Imagen</th>
             <th class="th-hoverable" (click)="ordenar('categoria')">Categoría</th>
@@ -48,7 +48,7 @@
             <td>
               <button
                 class="btn btn-outline-primary"
-                [routerLink]="['/catalogos/categorias/form-categoria', categoria.id]"
+                [routerLink]="['/catalogos/form-categoria', categoria.id]"
               >
                 <fa-icon icon="edit"></fa-icon>
               </button>

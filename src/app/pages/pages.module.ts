@@ -5,7 +5,7 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { faEdit, faTrash, faSpinner, faSave, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faSpinner, faSave, faSync, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { faEdit, faTrash, faSpinner, faSave, faSync } from '@fortawesome/free-so
 export class PagesModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTrash, faEdit, faSpinner, faSave, faSync);
+    library.addIcons(faTrash, faEdit, faSpinner, faSave, faSync, faUpload);
   }
 
 }

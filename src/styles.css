@@ -39,3 +39,15 @@ body {
 div.errors small {
   display: block;
 }
+
+.header-datatable {
+  cursor: default;
+  user-select: none;
+}
+
+.header-datatable th.th-hoverable:hover {
+  background-color: #343a40;
+  color: #fff;
+  cursor: pointer;
+  transition: ease-in 0.1s;
+}
