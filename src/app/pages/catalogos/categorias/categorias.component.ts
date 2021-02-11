@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 import { AuthService } from '../../../services/auth.service';
 import { CategoriasService } from '../../../services/categorias.service';
+import { UploadFirebaseService } from '../../../services/upload-firebase.service';
 
 import { Categoria } from '../../../models/categoria.model';
 import { Pagina } from 'src/app/models/pagina.model';
@@ -30,6 +31,7 @@ export class CategoriasComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private categoriasService: CategoriasService,
+              private uploadFirebaseService: UploadFirebaseService,
               private router: Router) {
 
     this.cargando = true;
@@ -89,7 +91,7 @@ export class CategoriasComponent implements OnInit {
     this.obtenerPagina();
   }
 
-  eliminar(categoria: Categoria): void {
+  async eliminar(categoria: Categoria): Promise<void> {
     Swal.fire({
       title: 'Está Seguro?',
       text: `La categoría : ${categoria.categoria} será eliminada`,
@@ -100,39 +102,25 @@ export class CategoriasComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        this.categoriasService.delete(categoria.id).subscribe(() => {
+        this.categoriasService.delete(categoria.id).subscribe(async (resp) => {
+          await this.uploadFirebaseService.eliminarArchivo(categoria.imagen.nombre);
+
           this.cargando = true;
           this.pagina.reset();
           this.obtenerPagina();
-          Swal.fire(
-            'Eliminada!',
-            `Categoría eliminada correctamente`,
-            'success'
-          );
+          Swal.fire('Eliminada!', resp.mensaje, 'success');
         }, err => {
           if (err.status === 403 || err.status === 401) {
             this.authService.errorDeAutenticacion();
           } else if (err.status === 400) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Atención!',
-              text: err.error.mensaje
-            });
+            Swal.fire('Atención!', err.error.mensaje, 'warning');
           } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Algo salió muy mal!',
-              text: err.error.mensaje
-            });
+            Swal.fire('Algo salió muy mal!', err.error.mensaje, 'error');
           }
           this.cargando = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          'No se ha eliminado ninguna categoría',
-          'error'
-        );
+        Swal.fire('Cancelado', 'No se ha eliminado ninguna categoría', 'error');
       }
     });
   }

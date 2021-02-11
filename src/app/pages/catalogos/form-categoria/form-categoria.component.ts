@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -6,10 +6,10 @@ import Swal from 'sweetalert2';
 import { CategoriasService } from '../../../services/categorias.service';
 import { AuthService } from '../../../services/auth.service';
 import { ValidationService } from '../../../services/validation.service';
-import { UploadFirebaseService } from '../../../services/upload-firebase.service';
 
 import { Categoria } from '../../../models/categoria.model';
-import { FileItem } from '../../../models/file-item.model';
+import { Imagen } from '../../../models/imagen.model';
+import { SubirImagenComponent } from '../../../components/subir-imagen/subir-imagen.component';
 
 @Component({
   selector: 'app-form-categoria',
@@ -24,12 +24,11 @@ export class FormCategoriaComponent implements OnInit {
   public categoria: Categoria;
   public form: FormGroup;
 
-  public imagenSeleccionada: FileItem;
+  @ViewChild(SubirImagenComponent, {static: true}) public cargadorImagen: SubirImagenComponent;
 
   constructor(private categoriasService: CategoriasService,
               private authService: AuthService,
               private validation: ValidationService,
-              private uploadFirebaseService: UploadFirebaseService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
     this.configurarForm();
@@ -89,12 +88,11 @@ export class FormCategoriaComponent implements OnInit {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.guardando = true;
-      if (this.imagenSeleccionada) {
-        const urlImagenCargada = await this.cargarImagen();
-        this.categoria.imagen = urlImagenCargada;
-      }
+      this.categoria.imagen = !this.categoria.imagen ? new Imagen() : this.categoria.imagen;
 
+      this.desactivarInputs();
       this.construirCategoria();
+      await this.cargarImagen();
       if (this.categoria.id === 0) {
         this.crear();
       } else {
@@ -103,11 +101,19 @@ export class FormCategoriaComponent implements OnInit {
     }
   }
 
-  async cargarImagen(): Promise<any> {
-    await this.uploadFirebaseService.subirArchivo(this.imagenSeleccionada);
+  async cargarImagen(): Promise<void> {
+    try {
+      const imagenCargada = await this.cargadorImagen.cargarImagen();
+      this.categoria.imagen.nombre = imagenCargada.nombre;
+      this.categoria.imagen.url = await imagenCargada.url;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-    return this.uploadFirebaseService.referenciaCloudStorage(this.imagenSeleccionada.nombreArchivo)
-    .getDownloadURL().toPromise();
+  desactivarInputs(): void {
+    this.form.get('categoria').disable();
+    this.form.get('descripcion').disable();
   }
 
   crear(): void {

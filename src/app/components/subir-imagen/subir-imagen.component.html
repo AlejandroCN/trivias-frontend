@@ -7,7 +7,7 @@
         <img
           *ngIf="!imagenSeleccionada"
           class="img-fluid mx-auto d-block"
-          [src]="ulrImagen | image"
+          [src]="imagenExistente?.url | image"
           style="width: 200px"
         />
         <img
@@ -29,6 +29,18 @@
           type="file"
           (change)="seleccionarArchivo($event.target.files[0])"
         />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 form-group">
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            [ngStyle]="{ 'width': imagenSeleccionada?.progreso + '%' }"
+          ></div>
+        </div>
       </div>
     </div>
   </div>

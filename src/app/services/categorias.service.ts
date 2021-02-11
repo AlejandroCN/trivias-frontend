@@ -49,9 +49,9 @@ export class CategoriasService {
     );
   }
 
-  delete(categoriaId: number): Observable<Categoria> {
+  delete(categoriaId: number): Observable<any> {
     return this.http.delete(`${this.endPoint}/${categoriaId}`).pipe(
-      map(response => response as Categoria)
+      map(response => response as any)
     );
   }
 

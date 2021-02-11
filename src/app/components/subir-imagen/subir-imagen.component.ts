@@ -1,7 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
 import { FileItem } from '../../models/file-item.model';
+import { Imagen } from 'src/app/models/imagen.model';
+
+import { UploadFirebaseService } from '../../services/upload-firebase.service';
 
 @Component({
   selector: 'app-subir-imagen',
@@ -10,18 +13,17 @@ import { FileItem } from '../../models/file-item.model';
 })
 export class SubirImagenComponent implements OnInit {
 
-  @Input() public ulrImagen: string;
-  @Output() private cambioImagen: EventEmitter<FileItem>;
+  // Es la imagen existente (puede no existir)
+  @Input() public imagenExistente: Imagen;
 
   // es la imagen que selecciona el usuario antes de subir
-  public imagenSeleccionada: File;
+  public imagenSeleccionada: FileItem;
   // es la imagen seleccionada en base 64 para mostrar la vista previa
   public imagenPreVisualizada: string;
 
-  constructor() {
+  constructor(private uploadFirebaseService: UploadFirebaseService) {
     this.imagenSeleccionada = null;
-    this.ulrImagen = null;
-    this.cambioImagen = new EventEmitter();
+    this.imagenExistente = null;
   }
 
   ngOnInit(): void {
@@ -30,12 +32,11 @@ export class SubirImagenComponent implements OnInit {
   seleccionarArchivo(archivo: File): void {
     if (archivo) {
       if (archivo.type.indexOf('image') >= 0) {
-        this.imagenSeleccionada = archivo;
+        this.imagenSeleccionada = new FileItem(archivo);
 
         const reader = new FileReader();
         reader.readAsDataURL(archivo);
         reader.onloadend = () => this.imagenPreVisualizada = reader.result as string;
-        this.cambioImagen.emit(new FileItem(this.imagenSeleccionada));
       } else {
         this.imagenSeleccionada = null;
         Swal.fire({
@@ -45,6 +46,39 @@ export class SubirImagenComponent implements OnInit {
         });
       }
     }
+  }
+
+  public async cargarImagen(): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
+      if (this.imagenSeleccionada) {
+        try {
+          if (this.imagenExistente) {
+            await this.uploadFirebaseService.eliminarArchivo(this.imagenExistente.nombre);
+          }
+          this.imagenSeleccionada.imagen.nombre = this.generarId(5) + '_' + this.imagenSeleccionada.imagen.nombre;
+          await this.uploadFirebaseService.subirArchivo(this.imagenSeleccionada);
+        } catch (err) {
+          reject(err);
+        }
+        resolve({
+          url: this.uploadFirebaseService.referenciaCloudStorage(this.imagenSeleccionada.imagen.nombre)
+          .getDownloadURL().toPromise(),
+          nombre: this.imagenSeleccionada.imagen.nombre
+        });
+      } else {
+        reject('No se ha seleccionado ninguna imagen');
+      }
+    });
+  }
+
+  private generarId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
 }

@@ -7,6 +7,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CatalogosRoutingModule } from './catalogos-routing.module';
 import { HeaderTableModule } from '../../components/header-table/header-table.module';
 import { SubirImagenModule } from '../../components/subir-imagen/subir-imagen.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 import { CategoriasComponent } from './categorias/categorias.component';
 import { FormCategoriaComponent } from './form-categoria/form-categoria.component';
@@ -23,7 +24,8 @@ import { FormCategoriaComponent } from './form-categoria/form-categoria.componen
     NgbPaginationModule,
     CatalogosRoutingModule,
     HeaderTableModule,
-    SubirImagenModule
+    SubirImagenModule,
+    PipesModule
   ]
 })
 export class CatalogosModule { }

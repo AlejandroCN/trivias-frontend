@@ -40,7 +40,9 @@
         <tbody>
           <!-- Categorías Existentes -->
           <tr *ngFor="let categoria of categorias">
-            <td>Img</td>
+            <td>
+              <img [src]="categoria.imagen?.url | image" alt="img" class="img-thumbnail img-fluid">
+            </td>
             <td>{{ categoria.categoria }}</td>
             <td>{{ categoria.descripcion }}</td>
             

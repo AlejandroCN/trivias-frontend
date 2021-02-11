@@ -13,14 +13,15 @@ export class UploadFirebaseService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  subirArchivo(archivo: FileItem): AngularFireUploadTask {
-    archivo.estaSubiendo = true;
+  subirArchivo(item: FileItem): AngularFireUploadTask {
+    item.estaSubiendo = true;
 
-    const tarea = this.storage.upload(`${this.directorioCategorias}/${archivo.nombreArchivo}`, archivo.archivo);
+    const tarea = this.storage
+    .upload(`${this.directorioCategorias}/${item.imagen.nombre}`, item.archivo);
     tarea.percentageChanges().subscribe(porcentaje => {
-      archivo.progreso = porcentaje;
+      item.progreso = porcentaje;
       if (porcentaje >= 100) {
-        archivo.estaSubiendo = false;
+        item.estaSubiendo = false;
       }
     });
     return tarea;
@@ -28,6 +29,10 @@ export class UploadFirebaseService {
 
   public referenciaCloudStorage(nombreArchivo: string): AngularFireStorageReference {
     return this.storage.ref(`${this.directorioCategorias}/${nombreArchivo}`);
+  }
+
+  public eliminarArchivo(nombre: string): Promise<any> {
+    return this.referenciaCloudStorage(nombre).delete().toPromise();
   }
 
 }
