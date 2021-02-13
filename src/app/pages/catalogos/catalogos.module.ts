@@ -11,11 +11,15 @@ import { PipesModule } from '../../pipes/pipes.module';
 
 import { CategoriasComponent } from './categorias/categorias.component';
 import { FormCategoriaComponent } from './form-categoria/form-categoria.component';
+import { PreguntasComponent } from './preguntas/preguntas.component';
+import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
 
 @NgModule({
   declarations: [
     CategoriasComponent,
-    FormCategoriaComponent
+    FormCategoriaComponent,
+    PreguntasComponent,
+    FormPreguntaComponent
   ],
   imports: [
     CommonModule,
