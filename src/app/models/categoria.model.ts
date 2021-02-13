@@ -8,7 +8,6 @@ export class Categoria {
   imagen: Imagen;
 
   constructor() {
-    this.imagen = new Imagen();
   }
 
 }

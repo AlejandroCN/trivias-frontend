@@ -10,14 +10,17 @@ import { SubirImagenModule } from '../../components/subir-imagen/subir-imagen.mo
 import { PipesModule } from '../../pipes/pipes.module';
 
 import { CategoriasComponent } from './categorias/categorias.component';
-import { FormCategoriaComponent } from './form-categoria/form-categoria.component';
+import { RegistrarCategoriaComponent } from './registrar-categoria/registrar-categoria.component';
 import { PreguntasComponent } from './preguntas/preguntas.component';
 import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
+import { FormCategoriaModule } from '../../components/form-categoria/form-categoria.module';
+import { SpinnerModule } from '../../components/spinner/spinner.module';
+import { FormActionsModule } from '../../components/form-actions/form-actions.module';
 
 @NgModule({
   declarations: [
     CategoriasComponent,
-    FormCategoriaComponent,
+    RegistrarCategoriaComponent,
     PreguntasComponent,
     FormPreguntaComponent
   ],
@@ -29,7 +32,10 @@ import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
     CatalogosRoutingModule,
     HeaderTableModule,
     SubirImagenModule,
-    PipesModule
+    PipesModule,
+    FormCategoriaModule,
+    SpinnerModule,
+    FormActionsModule
   ]
 })
 export class CatalogosModule { }

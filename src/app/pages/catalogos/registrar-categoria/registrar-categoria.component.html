@@ -1,0 +1,36 @@
+<app-spinner *ngIf="cargando"></app-spinner>
+
+<section [hidden]="cargando">
+  <!-- Datos Categoria -->
+  <div class="card mb-3">
+    <div class="card-header">Ingrese Los Datos Solicitados</div>
+
+    <div class="card-body">
+      <app-form-categoria
+        [categoria]="categoria"
+      ></app-form-categoria>
+    </div>
+  </div>
+  <!-- /Datos Categoria -->
+
+  <!-- Imagen Categoria -->
+  <div class="row">
+    <div class="col-sm-6">
+      <app-subir-imagen
+        [imagenExistente]="categoria?.imagen"
+      ></app-subir-imagen>
+    </div>
+  </div>
+  <!-- /Imagen Categoria -->
+
+  <!-- Opciones Formulario -->
+  <section class="mt-3 mb-5">
+    <app-form-actions
+      [procesando]="guardando"
+      rutaAnterior='/catalogos/categorias'
+      [labelAction]="categoria?.id === 0 ? 'Guardar' : 'Actualizar'"
+      (action)="guardarCategoria()"
+    ></app-form-actions>
+  </section>
+  <!-- -Opciones Formulario -->
+</section>

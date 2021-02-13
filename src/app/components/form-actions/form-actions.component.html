@@ -1,0 +1,19 @@
+<button
+  class="btn btn-danger mr-2"
+  [disabled]="procesando"
+  [routerLink]="[rutaAnterior]"
+>
+  Regresar
+</button>
+<button
+  class="btn btn-success"
+  [disabled]="procesando"
+  (click)="onClickAction()"
+>
+  <fa-icon
+    [icon]="procesando ? 'sync' : 'save'"
+    [spin]="procesando"
+    class="mr-2"
+  ></fa-icon>
+  {{ labelAction }}
+</button>

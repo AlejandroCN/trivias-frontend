@@ -103,7 +103,9 @@ export class CategoriasComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.categoriasService.delete(categoria.id).subscribe(async (resp) => {
-          await this.uploadFirebaseService.eliminarArchivo(categoria.imagen.nombre);
+          if (categoria.imagen) {
+            await this.uploadFirebaseService.eliminarArchivo(categoria.imagen.nombre);
+          }
 
           this.cargando = true;
           this.pagina.reset();

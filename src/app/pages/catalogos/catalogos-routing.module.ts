@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CategoriasComponent } from './categorias/categorias.component';
-import { FormCategoriaComponent } from './form-categoria/form-categoria.component';
-import {FormPreguntaComponent} from './form-pregunta/form-pregunta.component';
-import {PreguntasComponent} from './preguntas/preguntas.component';
+import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
+import { PreguntasComponent } from './preguntas/preguntas.component';
+import { RegistrarCategoriaComponent } from './registrar-categoria/registrar-categoria.component';
 
 const rutas: Routes = [
   {
@@ -18,7 +18,7 @@ const rutas: Routes = [
   },
   {
     path: 'form-categoria',
-    component: FormCategoriaComponent,
+    component: RegistrarCategoriaComponent,
     data: {
       titulo: 'Formulario Categoría',
       descripcion: 'Forma para dar de alta o editar una categoría',
@@ -27,7 +27,7 @@ const rutas: Routes = [
   },
   {
     path: 'form-categoria/:id',
-    component: FormCategoriaComponent,
+    component: RegistrarCategoriaComponent,
     data: {
       titulo: 'Formulario Categoría',
       descripcion: 'Forma para dar de alta o editar una categoría',

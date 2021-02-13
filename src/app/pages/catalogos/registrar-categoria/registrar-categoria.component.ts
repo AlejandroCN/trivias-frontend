@@ -1,38 +1,35 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { CategoriasService } from '../../../services/categorias.service';
 import { AuthService } from '../../../services/auth.service';
-import { ValidationService } from '../../../services/validation.service';
 
 import { Categoria } from '../../../models/categoria.model';
 import { Imagen } from '../../../models/imagen.model';
+
 import { SubirImagenComponent } from '../../../components/subir-imagen/subir-imagen.component';
+import { FormCategoriaComponent } from '../../../components/form-categoria/form-categoria.component';
 
 @Component({
-  selector: 'app-form-categoria',
-  templateUrl: './form-categoria.component.html',
-  styleUrls: ['./form-categoria.component.css']
+  selector: 'app-registrar-categoria',
+  templateUrl: './registrar-categoria.component.html',
+  styleUrls: []
 })
-export class FormCategoriaComponent implements OnInit {
+export class RegistrarCategoriaComponent implements OnInit {
 
   public guardando: boolean;
   public cargando: boolean;
 
   public categoria: Categoria;
-  public form: FormGroup;
 
   @ViewChild(SubirImagenComponent, {static: true}) public cargadorImagen: SubirImagenComponent;
+  @ViewChild(FormCategoriaComponent, {static: true}) public form: FormCategoriaComponent;
 
   constructor(private categoriasService: CategoriasService,
               private authService: AuthService,
-              private validation: ValidationService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
-    this.configurarForm();
-
     this.activatedRoute.params.subscribe((params) => {
       if (params.id) {
         this.cargando = true;
@@ -47,27 +44,9 @@ export class FormCategoriaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  configurarForm(): void {
-    this.form = new FormGroup({
-      categoria: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
-        Validators.pattern(this.validation.alfaNumEspaciosAcentos)
-      ]),
-      descripcion: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(150),
-        Validators.pattern(this.validation.alfaNumEspaciosAcentos)
-      ])
-    });
-  }
-
-  obtenerCategoria(id: number): void {
+  private obtenerCategoria(id: number): void {
     this.categoriasService.findById(id).subscribe(categoria => {
       this.categoria = categoria;
-      this.poblarFormulario();
       this.cargando = false;
     }, err => {
       if (err.status === 401 || err.status === 403) {
@@ -79,19 +58,11 @@ export class FormCategoriaComponent implements OnInit {
     });
   }
 
-  poblarFormulario(): void {
-    this.form.get('categoria').setValue(this.categoria.categoria);
-    this.form.get('descripcion').setValue(this.categoria.descripcion);
-  }
-
-  async guardarCategoria(): Promise<void> {
-    this.form.markAllAsTouched();
-    if (this.form.valid) {
+  public async guardarCategoria(): Promise<void> {
+    if (this.form.poblarCategoria()) {
       this.guardando = true;
-      this.categoria.imagen = !this.categoria.imagen ? new Imagen() : this.categoria.imagen;
-
-      this.desactivarInputs();
-      this.construirCategoria();
+      this.form.desactivarInputs();
+      
       await this.cargarImagen();
       if (this.categoria.id === 0) {
         this.crear();
@@ -100,10 +71,11 @@ export class FormCategoriaComponent implements OnInit {
       }
     }
   }
-
-  async cargarImagen(): Promise<void> {
+  
+  private async cargarImagen(): Promise<void> {
     try {
       const imagenCargada = await this.cargadorImagen.cargarImagen();
+      this.categoria.imagen = !this.categoria.imagen ? new Imagen() : this.categoria.imagen;
       this.categoria.imagen.nombre = imagenCargada.nombre;
       this.categoria.imagen.url = await imagenCargada.url;
     } catch (err) {
@@ -111,12 +83,7 @@ export class FormCategoriaComponent implements OnInit {
     }
   }
 
-  desactivarInputs(): void {
-    this.form.get('categoria').disable();
-    this.form.get('descripcion').disable();
-  }
-
-  crear(): void {
+  private crear(): void {
     this.categoriasService.save(this.categoria).subscribe(categoria => {
       Swal.fire('Categoría Registrada', `Se ha registrado la categoría ${categoria.categoria}`, 'success');
       this.guardando = false;
@@ -129,11 +96,11 @@ export class FormCategoriaComponent implements OnInit {
         console.log(err);
         this.router.navigateByUrl('/catalogos/categorias');
       }
-      this.cargando = false;
+      this.guardando = false;
     });
   }
 
-  actualizar(): void {
+  private actualizar(): void {
     this.categoriasService.update(this.categoria).subscribe(categoria => {
       Swal.fire('Categoría Actualizada', `Se ha actualizado la categoría ${categoria.categoria}`, 'success');
       this.guardando = false;
@@ -146,13 +113,8 @@ export class FormCategoriaComponent implements OnInit {
         console.log(err);
         this.router.navigateByUrl('/catalogos/categorias');
       }
-      this.cargando = false;
+      this.guardando = false;
     });
-  }
-
-  construirCategoria(): void {
-    this.categoria.categoria = this.form.get('categoria').value.trim().replace(/\s\s+/g, ' ');
-    this.categoria.descripcion = this.form.get('descripcion').value.trim().replace(/\s\s+/g, ' ');
   }
 
 }
