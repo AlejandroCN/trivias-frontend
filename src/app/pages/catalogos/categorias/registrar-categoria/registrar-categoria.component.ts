@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-import { CategoriasService } from '../../../services/categorias.service';
-import { AuthService } from '../../../services/auth.service';
+import { CategoriasService } from '../../../../services/categorias.service';
+import { AuthService } from '../../../../services/auth.service';
 
-import { Categoria } from '../../../models/categoria.model';
-import { Imagen } from '../../../models/imagen.model';
+import { Categoria } from '../../../../models/categoria.model';
+import { Imagen } from '../../../../models/imagen.model';
 
-import { SubirImagenComponent } from '../../../components/subir-imagen/subir-imagen.component';
-import { FormCategoriaComponent } from '../../../components/form-categoria/form-categoria.component';
+import { SubirImagenComponent } from '../../../../components/subir-imagen/subir-imagen.component';
+import { FormCategoriaComponent } from '../../../../components/form-categoria/form-categoria.component';
 
 @Component({
   selector: 'app-registrar-categoria',

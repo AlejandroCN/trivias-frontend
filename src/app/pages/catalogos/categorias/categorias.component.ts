@@ -56,7 +56,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   clickBotonAgregar(): void {
-    this.router.navigate(['/catalogos/form-categoria']);
+    this.router.navigate(['/catalogos/categorias/form-categoria']);
   }
 
   obtenerPagina(): void {

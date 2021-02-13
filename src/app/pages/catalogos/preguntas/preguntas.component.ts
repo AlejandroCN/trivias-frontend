@@ -54,7 +54,7 @@ export class PreguntasComponent implements OnInit {
   }
 
   clickBotonAgregar(): void {
-    this.router.navigate(['/catalogos/form-pregunta']);
+    this.router.navigate(['/catalogos/preguntas/form-pregunta']);
   }
 
   obtenerPagina(): void {
