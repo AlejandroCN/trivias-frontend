@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+  <!-- Primer Renglon -->
+  <div class="row">
+    <!-- Categoria -->
+    <div class="form-group col-sm-6">
+      <label>Seleccione Categoría</label>
+      <select class="form-control" formControlName="categoria">
+        <option value="" disabled selected>Seleccione</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.categoria }}
+        </option>
+      </select>
+      <!-- Errores -->
+      <div
+        class="text-danger errors"
+        *ngIf="
+                form.get('categoria').invalid &&
+                form.get('categoria').touched
+              "
+      >
+        <small *ngIf="form.get('categoria').hasError('required')">
+          Debe seleccionar una categoría
+        </small>
+      </div>
+      <!-- Errores -->
+    </div>
+    <!-- Categoria -->
+
+    <!-- Pregunta -->
+    <div class="form-group col-sm-6">
+      <label>Pregunta</label>
+      <textarea
+        class="form-control"
+        autocomplete="off"
+        formControlName="pregunta"
+      >
+      </textarea>
+      <!-- Errores -->
+      <div
+        class="text-danger errors"
+        *ngIf="
+                form.get('pregunta').invalid &&
+                (form.get('pregunta').touched ||
+                  form.get('pregunta').dirty)
+              "
+      >
+        <small *ngIf="form.get('pregunta').hasError('required')">
+          Debe indicar la pregunta
+        </small>
+        <small *ngIf="form.get('pregunta').hasError('minlength')">
+          Ingrese al menos 5 caracteres
+        </small>
+        <small *ngIf="form.get('pregunta').hasError('maxlength')">
+          Ingrese máximo 255 caracteres
+        </small>
+        <small *ngIf="form.get('pregunta').hasError('pattern')">
+          Use solo caracteres alfanuméricos
+        </small>
+      </div>
+      <!-- /Errores -->
+    </div>
+    <!-- /Pregunta -->
+  </div>
+  <!-- /Primer Renglon -->
+</form>

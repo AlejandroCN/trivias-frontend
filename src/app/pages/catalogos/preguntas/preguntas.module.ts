@@ -5,19 +5,18 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { PreguntasComponent } from './preguntas.component';
-import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
+import { RegistrarPreguntaComponent } from './registrar-pregunta/registrar-pregunta.component';
 
 import { PreguntasRoutingModule } from './preguntas-routing.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { HeaderTableModule } from 'src/app/components/header-table/header-table.module';
 import { SpinnerModule } from 'src/app/components/spinner/spinner.module';
-import { FormActionsModule } from 'src/app/components/form-actions/form-actions.module';
+import { FormPreguntaModule } from 'src/app/components/form-pregunta/form-pregunta.module';
+import { FormRespuestasModule } from 'src/app/components/form-respuestas/form-respuestas.module';
+import { FormActionsModule } from '../../../components/form-actions/form-actions.module';
 
 @NgModule({
-  declarations: [
-    PreguntasComponent,
-    FormPreguntaComponent
-  ],
+  declarations: [PreguntasComponent, RegistrarPreguntaComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,7 +26,9 @@ import { FormActionsModule } from 'src/app/components/form-actions/form-actions.
     PipesModule,
     HeaderTableModule,
     SpinnerModule,
-    FormActionsModule
-  ]
+    FormActionsModule,
+    FormPreguntaModule,
+    FormRespuestasModule,
+  ],
 })
-export class PreguntasModule { }
+export class PreguntasModule {}

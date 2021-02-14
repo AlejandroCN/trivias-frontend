@@ -4,4 +4,10 @@ export class Respuesta {
   respuesta: string;
   correcta: boolean;
 
+  constructor() {
+    this.id = 0;
+    this.respuesta = '';
+    this.correcta = false;
+  }
+
 }

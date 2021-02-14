@@ -1,11 +1,7 @@
 <div class="card">
   <div class="card-header">Listado De Preguntas</div>
 
-  <!-- Spinner -->
-  <div class="spinner-container text-primary" *ngIf="cargando">
-    <fa-icon icon="spinner" [spin]="true" size="5x"></fa-icon>
-  </div>
-  <!-- /Spinner -->
+  <app-spinner *ngIf="cargando"></app-spinner>
 
   <div class="card-body" [hidden]="cargando">
     <!-- Contenedor tabla encabezado -->

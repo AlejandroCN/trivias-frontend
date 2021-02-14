@@ -1,0 +1,59 @@
+<form [formGroup]="form">
+  <div
+    class="row form-group"
+    *ngIf="checks.hasError('respuestaNoSeleccionada') && checks.touched"
+  >
+    <div class="col-12">
+      <div class="alert alert-danger">
+        Debe seleccionar una respuesta correcta
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div
+      class="form-group col-sm-6"
+      *ngFor="let respuesta of respuestas; let i = index"
+    >
+      <div [class]="'alert alert-' + colores[i]">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text" formArrayName="checks">
+              <input
+                type="checkbox"
+                [formControlName]="i"
+                (change)="onCheckChange(i)"
+              />
+            </div>
+          </div>
+
+          <div formArrayName="inputs" class="input-group_div-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Escribir respuesta"
+              autocomplete="off"
+              [formControlName]="i"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- Errores -->
+      <div
+        class="errors"
+        *ngIf="
+          inputs.controls[i].errors &&
+          (inputs.controls[i].touched || inputs.controls[i].dirty)
+        "
+      >
+        <small *ngIf="inputs.controls[i].errors.required"
+          >Debe indicar la respuesta</small
+        >
+        <small *ngIf="inputs.controls[i].errors.maxlength"
+          >Máximo 255 caracteres</small
+        >
+      </div>
+      <!-- /Errores -->
+    </div>
+  </div>
+</form>

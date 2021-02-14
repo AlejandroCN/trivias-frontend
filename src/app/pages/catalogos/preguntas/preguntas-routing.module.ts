@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FormPreguntaComponent } from './form-pregunta/form-pregunta.component';
+import { RegistrarPreguntaComponent } from './registrar-pregunta/registrar-pregunta.component';
 import { PreguntasComponent } from './preguntas.component';
 
 const rutas: Routes = [
@@ -16,7 +16,7 @@ const rutas: Routes = [
   },
   {
     path: 'form-pregunta',
-    component: FormPreguntaComponent,
+    component: RegistrarPreguntaComponent,
     data: {
       titulo: 'Formulario Pregunta',
       descripcion: 'Forma para dar de alta o editar una pregunta',
@@ -25,7 +25,7 @@ const rutas: Routes = [
   },
   {
     path: 'form-pregunta/:id',
-    component: FormPreguntaComponent,
+    component: RegistrarPreguntaComponent,
     data: {
       titulo: 'Formulario Pregunta',
       descripcion: 'Forma para dar de alta o editar una pregunta',
