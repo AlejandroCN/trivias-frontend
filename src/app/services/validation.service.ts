@@ -18,7 +18,6 @@ export class ValidationService {
       if (array.controls.find(ctrl => ctrl.value)) {
         return null;
       } else {
-        console.log('Respuesta no seleccionada');
         return {respuestaNoSeleccionada: true};
       }
     };

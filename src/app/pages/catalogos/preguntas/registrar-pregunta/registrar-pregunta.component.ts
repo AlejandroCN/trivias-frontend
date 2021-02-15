@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormArray, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -7,9 +8,7 @@ import { PreguntasService } from 'src/app/services/preguntas.service';
 
 import { Pregunta } from 'src/app/models/pregunta.model';
 import { Respuesta } from 'src/app/models/respuesta.model';
-
-import { FormPreguntaComponent } from '../../../../components/form-pregunta/form-pregunta.component';
-import { FormRespuestasComponent } from '../../../../components/form-respuestas/form-respuestas.component';
+import { Categoria } from 'src/app/models/categoria.model';
 
 @Component({
   selector: 'app-registrar-pregunta',
@@ -21,12 +20,7 @@ export class RegistrarPreguntaComponent implements OnInit {
   public cargando: boolean;
 
   public pregunta: Pregunta;
-  public respuestas: Respuesta[] = [];
-
-  @ViewChild(FormPreguntaComponent, { static: true })
-  public form: FormPreguntaComponent;
-  @ViewChild(FormRespuestasComponent, { static: true })
-  public formRespuestas: FormRespuestasComponent;
+  public formulario: FormGroup;
 
   constructor(
     private preguntasService: PreguntasService,
@@ -34,32 +28,37 @@ export class RegistrarPreguntaComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    this.inicializarFormulario();
     this.activatedRoute.params.subscribe((params) => {
       if (params.id) {
         this.cargando = true;
         this.obtenerPregunta(params.id);
       } else {
-        this.inicializarRespuestas();
         this.pregunta = new Pregunta();
         this.pregunta.id = 0;
+        this.inicializarRespuestas();
       }
     });
   }
 
   ngOnInit(): void {}
 
-  inicializarRespuestas(): void {
-    for (let i=0; i<5; i++) {
+  private inicializarFormulario(): void {
+    this.formulario = new FormGroup({});
+  }
+
+  private inicializarRespuestas(): void {
+    this.pregunta.respuestas = [];
+    for (let i = 0; i < 5; i++) {
       const respuesta = new Respuesta();
-      this.respuestas.push(respuesta);
+      this.pregunta.respuestas.push(respuesta);
     }
   }
 
-  obtenerPregunta(id: number): void {
+  private obtenerPregunta(id: number): void {
     this.preguntasService.findById(id).subscribe(
       (pregunta) => {
         this.pregunta = pregunta;
-        this.respuestas = pregunta.respuestas;
         this.cargando = false;
       },
       (err) => {
@@ -73,10 +72,11 @@ export class RegistrarPreguntaComponent implements OnInit {
     );
   }
 
-  guardarPregunta(): void {
-    if (this.form.poblarPregunta() && this.formRespuestas.isValid()) {
+  public guardarPregunta(): void {
+    this.formulario.markAllAsTouched();
+    if (this.formulario.valid) {
       this.guardando = true;
-      this.pregunta.respuestas = this.respuestas;
+      this.construirPregunta();
       if (this.pregunta.id === 0) {
         this.crear();
       } else {
@@ -85,7 +85,25 @@ export class RegistrarPreguntaComponent implements OnInit {
     }
   }
 
-  crear(): void {
+  private construirPregunta(): void {
+    this.pregunta.categoria = new Categoria();
+    this.pregunta.categoria.id = Number(this.formulario.get('categoria').value);
+    this.pregunta.pregunta = this.formulario
+      .get('pregunta')
+      .value.trim()
+      .replace(/\s\s+/g, ' ');
+
+    const arrayInputs = this.formulario.get('inputs') as FormArray;
+    const arrayChecks = this.formulario.get('checks') as FormArray;
+    this.pregunta.respuestas.forEach((resp, index) => {
+      resp.correcta = arrayChecks.controls[index].value;
+      resp.respuesta = arrayInputs.controls[index].value
+        .trim()
+        .replace(/\s\s+/g, ' ');
+    });
+  }
+
+  private crear(): void {
     this.preguntasService.save(this.pregunta).subscribe(
       (pregunta) => {
         Swal.fire(
@@ -109,7 +127,7 @@ export class RegistrarPreguntaComponent implements OnInit {
     );
   }
 
-  actualizar(): void {
+  private actualizar(): void {
     this.preguntasService.update(this.pregunta).subscribe(
       (pregunta) => {
         Swal.fire(

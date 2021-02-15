@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -14,11 +14,11 @@ import { Pregunta } from 'src/app/models/pregunta.model';
   templateUrl: './form-pregunta.component.html',
   styles: [],
 })
-export class FormPreguntaComponent implements OnChanges {
+export class FormPreguntaComponent implements OnChanges, OnInit {
   // Pregunta no nula para identificar si se está editando o creando
   @Input() public pregunta: Pregunta;
 
-  public form: FormGroup;
+  @Input() public form: FormGroup;
   public categorias: Categoria[];
 
   constructor(
@@ -26,8 +26,11 @@ export class FormPreguntaComponent implements OnChanges {
     private categoriasService: CategoriasService,
     private authService: AuthService
   ) {
-    this.configurarForm();
     this.obtenerCategorias();
+  }
+
+  ngOnInit(): void {
+    this.configurarForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,15 +42,13 @@ export class FormPreguntaComponent implements OnChanges {
   }
 
   private configurarForm(): void {
-    this.form = new FormGroup({
-      categoria: new FormControl('', [Validators.required]),
-      pregunta: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(255),
-        Validators.pattern(this.validation.pregunta),
-      ]),
-    });
+    this.form.addControl('categoria', new FormControl('', [Validators.required])); 
+    this.form.addControl('pregunta', new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(255),
+      Validators.pattern(this.validation.pregunta)
+    ]));
   }
 
   private obtenerCategorias() {
@@ -70,21 +71,4 @@ export class FormPreguntaComponent implements OnChanges {
     this.form.get('pregunta').setValue(this.pregunta.pregunta);
   }
 
-  public poblarPregunta(): boolean {
-    this.form.markAllAsTouched();
-    if (this.form.valid) {
-      this.construirPregunta();
-      return true;
-    }
-    return false;
-  }
-
-  construirPregunta(): void {
-    this.pregunta.categoria = new Categoria();
-    this.pregunta.categoria.id = Number(this.form.get('categoria').value);
-    this.pregunta.pregunta = this.form
-      .get('pregunta')
-      .value.trim()
-      .replace(/\s\s+/g, ' ');
-  }
 }

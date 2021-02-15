@@ -6,7 +6,10 @@
 
   <!-- Card Body -->
   <div class="card-body">
-    <app-form-pregunta [pregunta]="pregunta"></app-form-pregunta>
+    <app-form-pregunta
+      [pregunta]="pregunta"
+      [form]="formulario"
+    ></app-form-pregunta>
   </div>
   <!-- Card Body -->
 </div>
@@ -14,10 +17,15 @@
 
 <!-- Tarjeta Respuestas -->
 <div class="card">
-  <div class="card-header">Ingrese las 5 posibles respuestas y marque la correcta</div>
-  
+  <div class="card-header">
+    Ingrese las 5 posibles respuestas y marque la correcta
+  </div>
+
   <div class="card-body">
-    <app-form-respuestas [respuestas]="respuestas"></app-form-respuestas>
+    <app-form-respuestas
+      [respuestas]="pregunta?.respuestas"
+      [form]="formulario"
+    ></app-form-respuestas>
   </div>
 </div>
 <!-- /Tarjeta Respuestas -->
