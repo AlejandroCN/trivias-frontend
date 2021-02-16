@@ -15,6 +15,7 @@ import { Categoria } from 'src/app/models/categoria.model';
 export class ListarCategoriasComponent implements OnInit {
   public categorias: Categoria[];
   public cargando: boolean;
+  public mensajeErrorHttp: string;
 
   constructor(
     private categoriasService: CategoriasService,
@@ -22,6 +23,7 @@ export class ListarCategoriasComponent implements OnInit {
     private router: Router
   ) {
     this.cargando = true;
+    this.mensajeErrorHttp = ''; 
   }
 
   ngOnInit(): void {
@@ -31,15 +33,19 @@ export class ListarCategoriasComponent implements OnInit {
   private obtenerCategorias() {
     this.categoriasService.findAll().subscribe(
       (categorias) => {
+        this.mensajeErrorHttp = '';
         this.categorias = categorias;
         this.cargando = false;
       },
       (err) => {
         if (err.status === 401 || err.status === 403) {
           this.authService.errorDeAutenticacion();
-        } else if (err.status !== 404) {
+        } else if (err.status === 404) {
+          this.mensajeErrorHttp = err.error.mensaje;
+        } else {
           Swal.fire('Algo salió muy mal!', err.error.mensaje, 'error');
         }
+        this.categorias = [];
         this.cargando = false;
       }
     );

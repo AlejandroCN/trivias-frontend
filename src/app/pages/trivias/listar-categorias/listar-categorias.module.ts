@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ListarCategoriasComponent } from './listar-categorias.component';
 
@@ -11,6 +12,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
   declarations: [ListarCategoriasComponent],
   imports: [
     CommonModule,
+    FontAwesomeModule,
     ListarCategoriasRoutingModule,
     SpinnerModule,
     PipesModule,

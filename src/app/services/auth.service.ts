@@ -11,10 +11,9 @@ import { Rol } from '../models/rol.model';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private endPoint = `${environment.apiUrl}/api`;
 
   // tslint:disable-next-line: variable-name
@@ -24,14 +23,15 @@ export class AuthService {
   // tslint:disable-next-line: variable-name
   private _rol: Rol;
 
-  constructor(private http: HttpClient,
-              private router: Router) {
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   public get usuario(): Usuario {
     if (this._usuario !== null && this._usuario !== undefined) {
       return this._usuario;
-    } else if (localStorage.getItem('usuario') !== null && localStorage.getItem('usuario') !== undefined) {
+    } else if (
+      localStorage.getItem('usuario') !== null &&
+      localStorage.getItem('usuario') !== undefined
+    ) {
       this._usuario = JSON.parse(localStorage.getItem('usuario')) as Usuario;
       return this._usuario;
     } else {
@@ -47,7 +47,10 @@ export class AuthService {
   public get token(): string {
     if (this._token !== null && this._token !== undefined) {
       return this._token;
-    } else if (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
+    } else if (
+      localStorage.getItem('token') !== null &&
+      localStorage.getItem('token') !== undefined
+    ) {
       this._token = localStorage.getItem('token');
       return this._token;
     } else {
@@ -58,7 +61,10 @@ export class AuthService {
   public get rol(): Rol {
     if (this._rol !== null && this._rol !== undefined) {
       return this._rol;
-    } else if (localStorage.getItem('rol') !== null && localStorage.getItem('rol') !== undefined) {
+    } else if (
+      localStorage.getItem('rol') !== null &&
+      localStorage.getItem('rol') !== undefined
+    ) {
       this._rol = JSON.parse(localStorage.getItem('rol')) as Rol;
       return this._rol;
     } else {
@@ -67,9 +73,9 @@ export class AuthService {
   }
 
   login(usuario: Usuario): Observable<any> {
-    return this.http.post(`${this.endPoint}/login`, usuario).pipe(
-      map(response => response as any)
-    );
+    return this.http
+      .post(`${this.endPoint}/login`, usuario)
+      .pipe(map((response) => response as any));
   }
 
   logout(): void {
@@ -94,9 +100,14 @@ export class AuthService {
   decodificarToken(accessToken: string): any {
     const base64Url = accessToken.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
 
     return JSON.parse(jsonPayload);
   }
@@ -128,7 +139,7 @@ export class AuthService {
       const rolAutenticado = this.rol;
       if (rolAutenticado) {
         let rol = '';
-        rol = (roles.filter((r) => r === this.rol.nombre))[0];
+        rol = roles.filter((r) => r === this.rol.nombre)[0];
 
         if (rol) {
           return true;
@@ -149,7 +160,7 @@ export class AuthService {
       icon: 'error',
       title: 'La sesión ha expirado!',
       showConfirmButton: false,
-      timer: 2000
+      timer: 2000,
     });
   }
 
@@ -158,13 +169,15 @@ export class AuthService {
     Swal.fire({
       icon: 'warning',
       title: 'Acceso Denegado: 403',
-      text: 'No tiene permiso de acceder a este recurso'
+      text: 'No tiene permiso de acceder a este recurso',
     });
   }
 
   paginaInicio(): void {
-    // Puede que dependa del rol, mas adelante se debe tomar en cuenta
-    this.router.navigate(['/trivias/listar-categorias']);
+    if (this.rol.nombre === 'ROLE_ADMIN') {
+      this.router.navigate(['/catalogos/categorias']);
+    } else {
+      this.router.navigate(['/trivias/listar-categorias']);
+    }
   }
-
 }

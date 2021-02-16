@@ -24,7 +24,7 @@ export class FormTriviaComponent implements OnChanges, OnInit {
   public guardando: boolean;
 
   private fechaInicio: Date;
-  public numeroPreguntaActual: number;
+  private numeroPreguntaActual: number;
   public preguntaActual: Pregunta;
   public intentoTerminado: boolean;
   public colores: string[] = [
@@ -84,5 +84,6 @@ export class FormTriviaComponent implements OnChanges, OnInit {
 
     this.record.preguntas = this.preguntas;
     this.record.usuario = this.authService.usuario;
-    this.record.tiempo = fechaFin.getTime() - this.fechaInicio.getTime();  }
+    this.record.tiempo = fechaFin.getTime() - this.fechaInicio.getTime();
+  }
 }
