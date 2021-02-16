@@ -1,0 +1,23 @@
+<app-spinner *ngIf="cargando"></app-spinner>
+
+<section [hidden]="cargando" class="mt-3 mb-5">
+  <h6>Seleccione una categoría para contestar la trivia</h6>
+
+  <div class="card-columns">
+    <div
+      class="card mt-3"
+      *ngFor="let categoria of categorias"
+      (click)="seleccionarCategoria(categoria)"
+    >
+      <img
+        class="card-img-top"
+        [src]="categoria.imagen.url | image "
+        alt="img-cat"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ categoria.categoria }}</h5>
+        <p class="card-text">{{ categoria.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</section>

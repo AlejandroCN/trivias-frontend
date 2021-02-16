@@ -1,0 +1,7 @@
+div.card:hover {
+  transition: ease-in 0.2s;
+  transform: scale(1.04);
+  cursor: pointer;
+  background-color: #007bff !important;
+  color: #fff;
+}

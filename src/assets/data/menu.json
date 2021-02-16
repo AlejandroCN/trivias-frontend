@@ -18,6 +18,18 @@
     ]
   },
   {
+    "header": "TRIVIAS",
+    "roles": ["ROLE_JUGADOR"],
+    "menuItems": [
+      {
+        "title": "Jugar",
+        "icon": "play-circle",
+        "link": "/trivias/listar-categorias",
+        "roles": ["ROLE_JUGADOR"]
+      }
+    ]
+  },
+  {
     "header": "RECORDS",
     "roles": ["ROLE_ADMIN", "ROLE_JUGADOR"],
     "menuItems": [

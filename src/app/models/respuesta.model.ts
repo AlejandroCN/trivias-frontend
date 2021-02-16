@@ -3,6 +3,7 @@ export class Respuesta {
   id: number;
   respuesta: string;
   correcta: boolean;
+  seleccionada?: boolean;
 
   constructor() {
     this.id = 0;

@@ -164,7 +164,7 @@ export class AuthService {
 
   paginaInicio(): void {
     // Puede que dependa del rol, mas adelante se debe tomar en cuenta
-    this.router.navigate(['/']);
+    this.router.navigate(['/trivias/listar-categorias']);
   }
 
 }

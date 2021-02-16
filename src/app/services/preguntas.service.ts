@@ -38,6 +38,13 @@ export class PreguntasService {
     );
   }
 
+  find20RandomByCategoria(categoriaId: number) {
+    return this.http.get(`${this.apiUrl}/find20RandomByCategoria/${categoriaId}`)
+    .pipe(
+      map(response => response as Pregunta[])
+    );
+  }
+
   update(pregunta: Pregunta): Observable<Pregunta> {
     return this.http.put(this.apiUrl, pregunta).pipe(
       map(response => response as Pregunta)

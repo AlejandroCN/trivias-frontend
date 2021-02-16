@@ -16,6 +16,9 @@ import {
   faChartBar,
   faObjectGroup,
   faQuestion,
+  faPlayCircle,
+  faPuzzlePiece,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -34,7 +37,10 @@ export class PagesModule {
       faGamepad,
       faChartBar,
       faObjectGroup,
-      faQuestion
+      faQuestion,
+      faPlayCircle,
+      faPuzzlePiece,
+      faExclamationTriangle
     );
   }
 }

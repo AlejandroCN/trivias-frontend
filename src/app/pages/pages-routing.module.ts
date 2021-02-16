@@ -12,6 +12,14 @@ const rutas: Routes = [
     }
   },
   {
+    path: 'trivias',
+    loadChildren: () => import('./trivias/trivias.module').then(m => m.TriviasModule),
+    canActivate: [ RoleGuard ],
+    data: {
+      roles: ['ROLE_JUGADOR']
+    }
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: '/catalogos'

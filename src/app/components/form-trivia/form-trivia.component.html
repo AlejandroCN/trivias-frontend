@@ -1,0 +1,77 @@
+<app-spinner *ngIf="guardando"></app-spinner>
+
+<section [hidden]="intentoTerminado">
+  <div class="row">
+    <div class="col-sm-3">
+      <img [src]="record?.categoria?.imagen.url | image" class="img-fluid" />
+    </div>
+
+    <div class="col-sm-9">
+      <div class="card">
+        <div class="card-body bg-success text-white">
+          <h1 class="display-4 text-center">{{ preguntaActual?.pregunta }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div
+      class="form-group col-sm-6 text-white"
+      *ngFor="let respuesta of preguntaActual?.respuestas; let i=index"
+    >
+      <div
+        [class]="'card respuesta bg-' + colores[i]"
+        (click)="seleccionarRespuesta(respuesta)"
+      >
+        <div class="card-body text-center">
+          <h5>{{ respuesta.respuesta }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row mt-5 mb-5" *ngIf="intentoTerminado && !guardando">
+  <div class="col-sm-12">
+    <div class="card bg-info text-white text-center">
+      <div class="card-body">
+        <h4>Intento Terminado!</h4>
+      </div>
+    </div>
+
+    <div class="card bg-light mt-3 mb-3">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th>Total Aciertos</th>
+                <td>{{ record?.totalAciertos }}</td>
+              </tr>
+              <tr>
+                <th>Tiempo Transcurrido</th>
+                <td>{{ record?.tiempo | formatMilis }}</td>
+              </tr>
+              <tr>
+                <th>Preguntas Contestadas</th>
+                <td>20</td>
+              </tr>
+              <tr>
+                <th>Categoría</th>
+                <td>{{ record?.categoria?.categoria }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button
+      class="btn btn-danger"
+      type="button"
+      routerLink="/trivias/listar-categorias"
+    >
+      Regresar
+    </button>
+  </div>
+</div>

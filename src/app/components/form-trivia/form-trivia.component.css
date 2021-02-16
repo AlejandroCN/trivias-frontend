@@ -1,0 +1,17 @@
+div.respuesta:hover {
+  transition: ease-in 0.2s;
+  transform: scale(1.04);
+  cursor: pointer;
+  background-color: #343a40 !important;
+}
+
+th {
+  width: 25%;
+  min-width: 20%;
+}
+
+td {
+  text-align: center;
+}
+
+
