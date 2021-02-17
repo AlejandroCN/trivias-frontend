@@ -5,29 +5,36 @@ import { RoleGuard } from '../guards/role.guard';
 const rutas: Routes = [
   {
     path: 'catalogos',
-    loadChildren: () => import('./catalogos/catalogos.module').then(m => m.CatalogosModule),
+    loadChildren: () =>
+      import('./catalogos/catalogos.module').then((m) => m.CatalogosModule),
     canActivate: [RoleGuard],
     data: {
-      roles: ['ROLE_ADMIN']
-    }
+      roles: ['ROLE_ADMIN'],
+    },
   },
   {
     path: 'trivias',
-    loadChildren: () => import('./trivias/trivias.module').then(m => m.TriviasModule),
-    canActivate: [ RoleGuard ],
+    loadChildren: () =>
+      import('./trivias/trivias.module').then((m) => m.TriviasModule),
+    canActivate: [RoleGuard],
     data: {
-      roles: ['ROLE_JUGADOR']
-    }
+      roles: ['ROLE_JUGADOR'],
+    },
+  },
+  {
+    path: 'reportes',
+    loadChildren: () =>
+      import('./reportes/reportes.module').then((m) => m.ReportesModule),
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/catalogos'
-  }
+    redirectTo: '/catalogos',
+  },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(rutas) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forChild(rutas)],
+  exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

@@ -7,6 +7,7 @@ export class Record {
   id: number;
   tiempo: number;
   totalAciertos: number;
+  fecha: Date;
   usuario: Usuario;
   categoria: Categoria;
   preguntas: Pregunta[];

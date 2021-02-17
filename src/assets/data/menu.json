@@ -36,13 +36,13 @@
       {
         "title": "Mis Records",
         "icon": "gamepad",
-        "link": "/records/mis-records",
+        "link": "/reportes/mis-records",
         "roles": ["ROLE_JUGADOR"]
       },
       {
         "title": "Top Ten",
         "icon": "chart-bar",
-        "link": "/records/top-ten",
+        "link": "/reportes/top-ten",
         "roles": ["ROLE_ADMIN", "ROLE_JUGADOR"]
       }
     ]

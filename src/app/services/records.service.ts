@@ -19,4 +19,16 @@ export class RecordsService {
       .post(this.apiUrl, record)
       .pipe(map((response) => response as Record));
   }
+
+  findAllByUsuario(usuarioId: number) {
+    return this.http
+      .get(`${this.apiUrl}/findAllByUsuario/${usuarioId}`)
+      .pipe(map((response) => response as Record[]));
+  }
+
+  getTopTen() {
+    return this.http
+      .get(`${this.apiUrl}/getTopTen`)
+      .pipe(map((response) => response as Record[]));
+  }
 }

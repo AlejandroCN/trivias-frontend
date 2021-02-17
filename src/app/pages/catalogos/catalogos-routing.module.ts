@@ -9,6 +9,11 @@ const rutas: Routes = [
   {
     path: 'preguntas',
     loadChildren: () => import('./preguntas/preguntas.module').then(m => m.PreguntasModule)
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'categorias'
   }
 ];
 

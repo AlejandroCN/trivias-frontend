@@ -1,0 +1,42 @@
+<app-spinner *ngIf="cargando"></app-spinner>
+
+<!-- Mensaje Error -->
+<div
+  class="alert alert-info text-center mt-3"
+  *ngIf="mensajeErrorHttp.length > 0"
+>
+  <div class="mb-3">
+    <fa-icon icon="info-circle" size="5x"></fa-icon>
+  </div>
+  <strong>{{ mensajeErrorHttp }}</strong>
+</div>
+<!-- /Mensaje Error -->
+
+<div class="card mt-3 mb-3" [hidden]="cargando || mensajeErrorHttp.length > 0 ">
+  <div class="card-header">Records Obtenidos</div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Fecha</th>
+            <th>Tiempo</th>
+            <th>Total Aciertos</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let record of records">
+            <td>{{ record.categoria.categoria }}</td>
+            <td>{{ record.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ record.tiempo | formatMilis }}</td>
+            <td>{{ record.totalAciertos }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+  </div>
+</div>
+

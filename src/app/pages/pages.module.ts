@@ -19,6 +19,7 @@ import {
   faPlayCircle,
   faPuzzlePiece,
   faExclamationTriangle,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -40,7 +41,8 @@ export class PagesModule {
       faQuestion,
       faPlayCircle,
       faPuzzlePiece,
-      faExclamationTriangle
+      faExclamationTriangle,
+      faInfoCircle
     );
   }
 }

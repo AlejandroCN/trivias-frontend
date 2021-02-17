@@ -16,6 +16,11 @@ const rutas: Routes = [
         (m) => m.JugarTriviaModule
       ),
   },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'listar-categorias'
+  }
 ];
 
 @NgModule({
