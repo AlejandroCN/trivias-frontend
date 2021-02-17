@@ -9,8 +9,16 @@ const rutas: Routes = [
         (m) => m.MisRecordsModule
       ),
   },
-
-  // agregar ruta '' que redireccione a 'top-ten'
+  {
+    path: 'top-ten',
+    loadChildren: () =>
+      import('./top-ten/top-ten.module').then((m) => m.TopTenModule),
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'top-ten'
+  }
 ];
 
 @NgModule({

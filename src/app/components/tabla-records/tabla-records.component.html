@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">Listado De Records</div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Categoría</th>
+            <th>Fecha</th>
+            <th>Tiempo</th>
+            <th>Total Aciertos</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let record of records">
+            <td>{{ record.usuario.username }}</td>
+            <td>{{ record.categoria.categoria }}</td>
+            <td>{{ record.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ record.tiempo | formatMilis }}</td>
+            <td>{{ record.totalAciertos }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+  </div>
+</div>
+

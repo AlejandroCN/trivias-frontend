@@ -29,6 +29,6 @@ export class RecordsService {
   getTopTen() {
     return this.http
       .get(`${this.apiUrl}/getTopTen`)
-      .pipe(map((response) => response as Record[]));
+      .pipe(map((response) => response as any));
   }
 }

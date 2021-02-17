@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { MisRecordsRoutingModule } from './mis-records-routing.module';
-import { MisRecordsComponent } from './mis-records.component';
+import { TopTenComponent } from './top-ten.component';
+import { TopTenRoutingModule } from './top-ten-routing.module';
 import { SpinnerModule } from 'src/app/components/spinner/spinner.module';
 import { TablaRecordsModule } from 'src/app/components/tabla-records/tabla-records.module';
 
 @NgModule({
-  declarations: [MisRecordsComponent],
+  declarations: [TopTenComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
-    MisRecordsRoutingModule,
+    TopTenRoutingModule,
     SpinnerModule,
     TablaRecordsModule,
   ],
 })
-export class MisRecordsModule {}
+export class TopTenModule {}
