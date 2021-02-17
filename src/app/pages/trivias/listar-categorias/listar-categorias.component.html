@@ -1,14 +1,13 @@
 <app-spinner *ngIf="cargando"></app-spinner>
 
 <!-- Mensaje Error -->
-<div
-  class="alert alert-warning text-center mt-3"
-  *ngIf="mensajeErrorHttp.length > 0"
->
-  <div class="mb-3">
-    <fa-icon icon="exclamation-triangle" size="5x"></fa-icon>
-  </div>
-  <strong>{{ mensajeErrorHttp }}</strong>
+<div class="mt-3">
+  <app-icon-alert
+    *ngIf="mensajeErrorHttp.length > 0"
+    [mensaje]="mensajeErrorHttp"
+    icono="exclamation-triangle"
+    bgClassColor="alert-warning"
+  ></app-icon-alert>
 </div>
 <!-- /Mensaje Error -->
 

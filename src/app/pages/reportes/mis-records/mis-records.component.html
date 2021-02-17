@@ -1,18 +1,16 @@
 <app-spinner *ngIf="cargando"></app-spinner>
 
 <!-- Mensaje Error -->
-<div
-  class="alert alert-info text-center mt-3"
-  *ngIf="mensajeErrorHttp.length > 0"
->
-  <div class="mb-3">
-    <fa-icon icon="info-circle" size="5x"></fa-icon>
-  </div>
-  <strong>{{ mensajeErrorHttp }}</strong>
+<div class="mt-3">
+  <app-icon-alert
+    *ngIf="mensajeErrorHttp.length > 0"
+    [mensaje]="mensajeErrorHttp"
+    icono="info-circle"
+    bgClassColor="alert-info"
+  ></app-icon-alert>
 </div>
 <!-- /Mensaje Error -->
 
 <section class="mt-3 mb-3" [hidden]="cargando || mensajeErrorHttp.length > 0">
   <app-tabla-records [records]="records"></app-tabla-records>
 </section>
-

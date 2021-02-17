@@ -1,0 +1,18 @@
+  <div
+    class="alert text-center"
+    [ngClass]="bgClassColor"
+  >
+    <div class="mb-3">
+      <fa-icon [icon]="icono" size="5x"></fa-icon>
+    </div>
+    <strong>{{ mensaje }}</strong>
+    <div *ngIf="rutaAnterior">
+      <button
+        class="btn btn-danger mt-3"
+        [routerLink]="[rutaAnterior]"
+      >
+        Regresar
+      </button>
+    </div>
+  </div>
+
