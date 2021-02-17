@@ -7,11 +7,19 @@ import { RegisterComponent } from './register/register.component';
 const rutas: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    data: {
+      titulo: 'Trivias App - Entrar',
+      descripcion: 'Inicio de sesión Trivias App'
+    }
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    data: {
+      titulo: 'Trivias App - Registrarse',
+      descripcion: 'Registro en Trivias App'
+    }
   },
   {
     path: '',
