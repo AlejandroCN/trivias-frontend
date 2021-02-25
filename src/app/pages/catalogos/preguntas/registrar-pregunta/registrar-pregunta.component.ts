@@ -122,7 +122,7 @@ export class RegistrarPreguntaComponent implements OnInit {
           console.log(err);
           this.router.navigateByUrl('/catalogos/preguntas');
         }
-        this.cargando = false;
+        this.guardando = false;
       }
     );
   }
@@ -146,7 +146,7 @@ export class RegistrarPreguntaComponent implements OnInit {
           console.log(err);
           this.router.navigateByUrl('/catalogos/preguntas');
         }
-        this.cargando = false;
+        this.guardando = false;
       }
     );
   }

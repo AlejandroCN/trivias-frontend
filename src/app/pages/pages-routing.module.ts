@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
 
 const rutas: Routes = [
@@ -26,10 +27,11 @@ const rutas: Routes = [
     loadChildren: () =>
       import('./reportes/reportes.module').then((m) => m.ReportesModule),
   },
+  // La ruta por defecto depende del rol, por ello se usa un guard
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/catalogos',
+    canActivate: [AuthGuard],
   },
 ];
 

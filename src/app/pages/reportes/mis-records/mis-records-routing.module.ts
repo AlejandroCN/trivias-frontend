@@ -10,7 +10,6 @@ const rutas: Routes = [
       titulo: 'Mis Records',
       icono: 'gamepad',
       descripcion: 'Consulta de los records obtenidos por el jugador',
-      roles: ['ROLE_JUGADOR']
     },
   },
 ];

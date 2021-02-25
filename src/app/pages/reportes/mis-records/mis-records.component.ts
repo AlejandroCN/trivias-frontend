@@ -39,7 +39,7 @@ export class MisRecordsComponent implements OnInit {
         if (err.status === 401 || err.status === 403) {
           this.authService.errorDeAutenticacion();
         } else if (err.status === 404) {
-          this.mensajeErrorHttp = '';
+          this.mensajeErrorHttp = err.error.mensaje;
         } else {
           Swal.fire('Algo salió muy mal!', err.error.mensaje, 'error');
         }

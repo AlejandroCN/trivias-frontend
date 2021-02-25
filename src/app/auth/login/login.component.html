@@ -4,7 +4,7 @@
       <form [formGroup]="form" class="login100-form validate-form">
         <span class="login100-form-title pb-3"> Trivias App </span>
         <span class="login100-form-title pb-4">
-          <fa-icon [icon]="faLightbulb"></fa-icon>
+          <fa-icon icon="lightbulb"></fa-icon>
         </span>
 
         <!-- Username -->
@@ -51,7 +51,7 @@
             class="btn-show-pass"
             (click)="mostrarPassword = !mostrarPassword"
           >
-            <fa-icon [icon]="mostrarPassword ? faEyeSlash : faEye"></fa-icon>
+            <fa-icon [icon]="mostrarPassword ? 'eye-slash' : 'eye'"></fa-icon>
           </span>
           <input
             formControlName="password"
@@ -66,7 +66,18 @@
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button class="login100-form-btn" (click)="iniciarSesion()">Entrar</button>
+            <button
+              class="login100-form-btn"
+              (click)="iniciarSesion()"
+              [disabled]="cargando"
+            >
+              <fa-icon
+                class="mr-2"
+                [icon]="cargando ? 'sync' : 'key'"
+                [spin]="cargando"
+              ></fa-icon>
+              Entrar
+            </button>
           </div>
         </div>
         <!-- /Submit -->
@@ -75,7 +86,7 @@
         <div class="text-center p-t-115">
           <span class="txt1"> ¿No tienes cuenta? </span>
 
-          <a class="txt2" href="#"routerLink="/auth/register"> Registrarse </a>
+          <a class="txt2" href="#" routerLink="/auth/register"> Registrarse </a>
         </div>
         <!-- /Register -->
       </form>

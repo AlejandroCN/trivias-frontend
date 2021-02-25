@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-import { faEye, faEyeSlash, faLightbulb } from '@fortawesome/free-solid-svg-icons';
-
 import { ValidationService } from '../../services/validation.service';
 import { ScriptsService } from '../../services/scripts.service';
 import { UsuariosService } from '../../services/usuarios.service';
@@ -23,10 +21,6 @@ export class RegisterComponent implements OnInit {
   public form: FormGroup;
   public cargando: boolean;
   public mostrarPassword: boolean;
-
-  public faEye = faEye;
-  public faEyeSlash = faEyeSlash;
-  public faLightbulb = faLightbulb;
 
   constructor(private validation: ValidationService,
               private scriptsService: ScriptsService,
@@ -72,7 +66,7 @@ export class RegisterComponent implements OnInit {
 
     if (this.form.valid) {
       this.cargando = true;
-      this.usuariosService.save(this.construirUsuario()).subscribe(usuario => {
+      this.usuariosService.save(this.construirUsuario()).subscribe(() => {
         Swal.fire({
           icon: 'success',
           title: 'Se ha registrado correctamente'

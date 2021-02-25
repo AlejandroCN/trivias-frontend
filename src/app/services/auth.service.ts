@@ -138,13 +138,8 @@ export class AuthService {
     if (roles) {
       const rolAutenticado = this.rol;
       if (rolAutenticado) {
-        let rol = '';
-        rol = roles.filter((r) => r === this.rol.nombre)[0];
-
-        if (rol) {
-          return true;
-        }
-        return false;
+        const rolEnLista = roles.find(r => r === rolAutenticado.nombre);
+        return rolEnLista ? true : false;
       } else {
         return false;
       }

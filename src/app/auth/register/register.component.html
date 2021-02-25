@@ -4,7 +4,7 @@
       <form [formGroup]="form" class="login100-form validate-form">
         <span class="login100-form-title pb-3"> Regístrate </span>
         <span class="login100-form-title pb-4">
-          <fa-icon [icon]="faLightbulb"></fa-icon>
+          <fa-icon icon="lightbulb"></fa-icon>
         </span>
 
         <!-- Nombre -->
@@ -87,7 +87,7 @@
             class="btn-show-pass"
             (click)="mostrarPassword = !mostrarPassword"
           >
-            <fa-icon [icon]="mostrarPassword ? faEyeSlash : faEye"></fa-icon>
+            <fa-icon [icon]="mostrarPassword ? 'eye-slash' : 'eye'"></fa-icon>
           </span>
           <input
             formControlName="password"
@@ -102,7 +102,16 @@
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button class="login100-form-btn" (click)="registrar()">
+            <button
+              class="login100-form-btn"
+              (click)="registrar()"
+              [disabled]="cargando"
+            >
+              <fa-icon
+                class="mr-2"
+                [icon]="cargando ? 'sync': 'save'"
+                [spin]="cargando"
+              ></fa-icon>
               Registrarse
             </button>
           </div>

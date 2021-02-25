@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
-
 import { ScriptsService } from '../../services/scripts.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -23,10 +19,6 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
   public cargando: boolean;
   public mostrarPassword: boolean;
-
-  public faEye = faEye;
-  public faEyeSlash = faEyeSlash;
-  public faLightbulb = faLightbulb;
 
   constructor(private scriptsService: ScriptsService,
               private authService: AuthService) {
