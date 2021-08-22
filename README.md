@@ -3,7 +3,8 @@ Trivias es una aplicación de preguntas sobre diferentes temáticas.
 Registrate con un nombre de usuario y contraseña para entrar a la aplicación, seleccionar una categoría y contestar 20 preguntas aleatorias.
 Tu tiempo de solución de la trivia y total de aciertos son agregados a tus records personales y si eres listo al top ten!
 Además como administrador puedes registrar nuevas categorías y nuevas preguntas.
-## Comenzando 🚀 
+Esta api es consumida por la aplicación cliente Angular que puedes consultar [aquí](https://github.com/AlejandroCN/trivias-backed "aquí").
+## Comenzando 🚀
 La aplicación hace uso del servicio Storage de Firebase para almacenar las imágenes de las categorías creadas, por ello debes crear una aplicación de Firebase y configurar la función Storage, crea un directorio (o un árbol de directorios) para almacenar las imágenes de las categorías y después configura el archivo: src/environments/firebase.environment.ts de la siguiente forma:
 ```
 export const firebaseConfig = {
